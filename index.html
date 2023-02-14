@@ -2104,6 +2104,9 @@
 				<div class="row">
 					<div class="col-xs-12 col-md-4">
 						<address class="side-icon-boxes">
+							<div>
+								<h5 style="color:#f1f1f1;">Total Visitors: <span id="counter"></span></h5>
+							</div>
 							<div class="side-icon-box">
 								<div class="side-icon">
 									<img src="images/location-arrow.png" alt="">
@@ -2135,6 +2138,12 @@
 									<a href="mailto:res.conclave@psgtech.ac.in">res.conclave@psgtech.ac.in</a>
 								</p>
 							</div>
+							<!-- <div class="side-icon-box">
+								<div class="side-icon">
+									<img src="images/mail-arrow.png" alt="">
+								</div>
+								<h5 style="color:#f1f1f1;">Total Visitors: <span id="counter"></span></h5>
+							</div> -->
 						</address>
 					</div>
 					<div class="col-xs-12 col-md-7">
@@ -2213,9 +2222,35 @@
 
 
 	<script>
+		// https://api.countapi.xyz/create?namespace=PSG-tech-admission-2023&value=0s
+
 		$(document).ready(function () {
 			$('[data-toggle="tooltip"]').tooltip();
 		});
+
+		const countEl = document.getElementById('counter');
+
+		function updateVisitCount() {
+			fetch('https://api.countapi.xyz/hit/PSG-tech-admission-2023?amount=1')
+				.then(res => res.json())
+				.then(res => {
+					countEl.innerHTML = res.value;
+				})
+		}
+		function getVisitCount() {
+			fetch('https://api.countapi.xyz/get/PSG-tech-admission-2023')
+				.then(res => res.json())
+				.then(res => {
+					countEl.innerHTML = res.value;
+				}
+				)
+		}
+		if (!sessionStorage.getItem("visited")) {
+			sessionStorage.setItem("visited", 1);
+			updateVisitCount();
+		} else {
+			getVisitCount();
+		}
 	</script>
 </body>
 
